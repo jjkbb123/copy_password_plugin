@@ -8,7 +8,8 @@ using namespace std;
 
 class Calculator {
 	public:
-		string operatorList = "+-*/";
+		string operatorList;
+        Calculator();
 		string formatString(string str) {
 			string newStr = str;
 			while (1)
@@ -71,6 +72,7 @@ class Calculator {
 			return currentOperator;
 		};
 };
+Calculator::Calculator(): operatorList("+-*/") {};
 double compute() {
 	cout << "please input arithmetic operation, example: 2 * 123" << endl;
 	string inputOperation;
