@@ -29,7 +29,7 @@ class Calculator {
 			string rightArithmetic(arithmetic, currentOperatorIndex + 1, arithmetic.size());
 			double result{};
 			if (leftArithmetic.empty() || rightArithmetic.empty()) {
-				cout << "算数表达式错误!";
+				cout << "the arithmetic is maybe error, please check.";
 				return {};
 			}
 			switch (currentOperator) {
@@ -65,14 +65,14 @@ class Calculator {
 				}
 			}
 			if (isError) {
-				cout << "算数表达式错误!";
+				cout << "the arithmetic is maybe error, please check.";
 				return {};
 			}
 			return currentOperator;
 		};
 };
 double compute() {
-	cout << "请输入算数表达式, 该版本暂只支持单个运算符运算 例：2 * 123" << endl;
+	cout << "please input arithmetic operation, example: 2 * 123" << endl;
 	string inputOperation;
 	getline(cin, inputOperation);
 	Calculator calculator;
@@ -80,12 +80,13 @@ double compute() {
 	double result = calculator.getResult(replaceSpaceStr);
 	return result;
 };
-void main() {
+int main() {
 	double result;
 	int ch = 0;
 	while (ch != 27) {
 		result = compute();
-		cout << result << endl << "点击ESC键退出或者按其他键继续开始:" << endl;
+		cout << result << endl << "click ESC is back the programe or click any keyborad to action the programe !" << endl;
 		ch = _getch();
 	};
+    return 0;
 }  
