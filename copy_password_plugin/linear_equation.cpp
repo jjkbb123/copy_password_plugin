@@ -1,46 +1,138 @@
+//#include <stdio.h>
+//#include <stdlib.h>
+//#include <math.h>
+//#include <conio.h>
+//float* ColPivot(float* c, int n);
+//int main()
+//{
+//	int i, j;
+//	float* x;
+//	int n = 4;
+//	float a[4][5] = { 4.,-1.,0.,2.,-1.0,-1,4,-1,0,-7.0,0,-1,4,-1,9.0,2,0,-1,4.0,0.0 };
+//	x = ColPivot(a[0], n);
+//	for (i = 0; i < n; i++) printf("x[%d]=%f\n", i, x[i]);
+//	//getch();
+//	return 0;
+//};
+//float* ColPivot(float* c, int n)
+//{
+//	int i, j, t, k;
+//	float* x, p;
+//	x = (float*)malloc(n * sizeof(float));
+//	for (i = 0; i <= n - 2; i++)
+//	{
+//		k = i;
+//		for (j = i + 1; j <= n - 1; j++)
+//			if (fabs(*(c + j * (n + 1) + i)) > (fabs(*(c + k * (n + 1) + i)))) k = j;
+//		if (k != i)
+//			for (j = i; j <= n; j++)
+//			{
+//				p = *(c + i * (n + 1) + j);
+//				*(c + i * (n + 1) + j) = *(c + k * (n + 1) + j);
+//				*(c + k * (n + 1) + j) = p;
+//			}
+//		for (j = i + 1; j <= n - 1; j++)
+//		{
+//			p = (*(c + j * (n + 1) + i)) / (*(c + i * (n + 1) + i));
+//			for (t = i; t <= n; t++)
+//				*(c + j * (n + 1) + t) -= p * (*(c + i * (n + 1) + t));
+//		}
+//	}
+//	for (i = n - 1; i >= 0; i--)
+//	{
+//		for (j = n - 1; j >= i + 1; j--)
+//			(*(c + i * (n + 1) + n)) -= x[j] * (*(c + i * (n + 1) + j));
+//		x[i] = *(c + i * (n + 1) + n) / (*(c + i * (n + 1) + i));
+//	}
+//	return x;
+//};
+
 #include <iostream>
 
 using namespace std;
 
-int* gauss(int data[], int dataConst[], int size, int initLine) {
+int* gauss(int data[], int dataConst[], int size) {
+	const int initLine = 3;
 	int initx1[initLine][initLine]; // init martix
+	int xxxx[initLine];
 	int index = 0;
-	for(int i = 0; i < initLine; i++) {
-		for(int j = 0; j < initLine; j++) {
+	int index2 = 0;
+	for (int i = 0; i < initLine; i++) {
+		for (int j = 0; j < initLine; j++) {
 			initx1[i][j] = data[index];
 			index++;
 		};
 	};
 	// show init matrix
 	cout << "init linear equation matrix." << endl;
-	for(int i = 1; i <= size; i++) {
-		cout << data[i-1] << " ";
-		if(!(i % initLine)) {
+	for (int i = 1; i <= size; i++) {
+		cout << data[i - 1] << " ";
+		if (!(i % initLine)) {
 			cout << endl;
 		};
 	};
 	// show init matrix constant
 	cout << "init linear equation contanst." << endl;
-	for(int i = 1; i <= initLine; i++) {
-		cout << dataConst[i-1] << endl;
+	for (int i = 1; i <= initLine; i++) {
+		cout << dataConst[i - 1] << endl;
 	};
 	// action from 1
-	for(int i = 1; i < initLine; i++) {
-		for(int j = 0; j < initLine; j++) {
-			initx1[i][j] = initx1[i][j] / initx1[i-1][j];
-		};
+	for (int i = 1; i < initLine; i++) {
+		xxxx[i] = data[initLine*i] / data[0];
+		//xxxx = [2/1, 4/1]
 	};
-  return data;
+	//for (int i = 1; i < initLine; i++) {
+	//	for (int j = i; j < initLine; j++) {
+	//		for (int k = 0; k < initLine; k++) {
+	//			int result = initx1[j][k] - (initx1[i - 1][k] * (initx1[j][i-1]/initx1[i-1][i-1]));
+	//			cout << result << " ";
+	//			//initx1[j][k] = result;
+	//			index2++;
+	//			if (!(index2 % 3)) {
+	//				cout << endl;
+	//			};
+	//		};
+	//	};
+	//		//initx1[i][j] = initx1[i][j];
+	//};
+	int z = 0;
+	int arr[initLine][initLine] = {};
+	for (int i = 1; i < initLine; i++) {
+		for (int j = i; j < initLine; j++) {
+			for (int k = 0; k < initLine; k++){
+				//initx1[j][k] - initx1[z][z];
+				cout << initx1[j][k] - initx1[z][k]*(initx1[j][z] / initx1[z][z]) << " ";
+			};
+		};
+
+		z++;
+			//initx1[i][j] = initx1[i][j];
+	};
+	/*for (int i = initLine-1; i > 0; i--) {
+		for (int j = i; j > 0; j--) {
+			n++;
+			cout << z;
+		};
+		z++;
+		n = 0;
+	};*/
+	/*
+		[
+			[1, -2, -1],
+			[2, -3,  1],
+			[4, -2,  7],
+		]
+	*/
+	return data;
 };
 
 int main() {
-	int data[] = {1, -2, -1, 2, -3, 1, 4, -2, 7};
-	int dataConst[] = {-2, -5, -7};
-	int initLine = 3;
+	int data[] = { 1, -2, -1,   2, -3, 1,   4, -2, 7 };
+	int dataConst[] = { -2, -5, -7 };
 	int dataSize = sizeof(data) / sizeof(data[0]);
-	int* result = gauss(data, dataConst, dataSize, initLine);
+	int* result = gauss(data, dataConst, dataSize);
 	// cout << result[1];
-  return 0;
+	return 0;
 };
 /*
 		[
@@ -48,26 +140,25 @@ int main() {
 			[2, -3,  1],
 			[4, -2,  7]
 		]
-    1 -2 -1     -2 
-    2 -3  1     -5
-    4 -2  7     -7
+	1 -2 -1     -2
+	2 -3  1     -5
+	4 -2  7     -7
 
-    1 -2 -1     -2
-    0 1  3      -1
-    0 6  11     1
+	1 -2 -1     -2
+	0 1  3      -1
+	0 6  11     1
 
-    1 -2 -1     -2
-    0 1  3      -1
-    0 0  -7     7
+	1 -2 -1     -2
+	0 1  3      -1
+	0 0  -7     7
 
-    1 2 -1
+	1 2 -1
 */
 
 /*
-    2 -1 0
-    -1 2 3
-
-    2 -1 0
-    0 -3 -6
-    1 2
+	2 -1 0
+	-1 2 3
+	2 -1 0
+	0 -3 -6
+	1 2
 */
