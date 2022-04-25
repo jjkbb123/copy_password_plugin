@@ -51,7 +51,7 @@ void backup(int bkup_alcs[N][M], int bkup_need[N][M], int bkup_avlb[M]) {
 }
 
 //恢复alcs,need,avlb
-void recovery(int bkup_alcs[N][M], int bkup_need[N][M], int bkup_avlb[M]) {
+void copy_init_data(int bkup_alcs[N][M], int bkup_need[N][M], int bkup_avlb[M]) {
 	memcpy(alcs, bkup_alcs, sizeof alcs);
 	memcpy(need, bkup_need, sizeof need);
 	memcpy(avlb, bkup_avlb, sizeof avlb);
@@ -77,7 +77,7 @@ bool check_safe() {
 		}
 		//如果找不到可以满足的进程，那么不是安全状态 
 		if (i == n) {
-			recovery(bkup_alcs1, bkup_need1, bkup_avlb1);	//恢复alcs,need,avlb
+			copy_init_data(bkup_alcs1, bkup_need1, bkup_avlb1);	//恢复alcs,need,avlb
 			return false;
 		}
 		int id = i;	//取得进程编号 
@@ -87,7 +87,7 @@ bool check_safe() {
 		sod[cnt] = id;	//放安全序列 
 		cnt++;	//已完成++
 		if (cnt == n) {
-			recovery(bkup_alcs1, bkup_need1, bkup_avlb1);	//恢复alcs,need,avlb
+			copy_init_data(bkup_alcs1, bkup_need1, bkup_avlb1);	//恢复alcs,need,avlb
 			return true;	//全部完成，返回是安全状态
 		}
 	}
@@ -107,7 +107,7 @@ int request_resource(int id, int req[M]) {
 	for (int j = 0; j < m; j++) need[id][j] -= req[j];
 	//安全性检查
 	if (!check_safe()) {
-		recovery(bkup_alcs2, bkup_need2, bkup_avlb2);	//恢复 
+		copy_init_data(bkup_alcs2, bkup_need2, bkup_avlb2);	//恢复 
 		return 3;
 	}
 	//检查通过，正式分配资源，也就不需要恢复备份了 
